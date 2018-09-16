@@ -1,0 +1,139 @@
+---
+title: "Lista 2 - MAE0217"
+author: 'Guilherme Navarro - Nº USP: 8943160 E Victor Ribeiro Baião Decanini Nº USP:
+  9790502'
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+# Exercício 1
+
+a) Fazndo uma normalização dos dados de 12h para 24h, temos
+
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+Estrada 1 & 00:07:00 & 00:58:00 & 01:24:00 & 01:35:00 & 02:05:00 \\ \hline
+ & 03:14:00 & 03:25:00 & 03:46:00 & 05:44:00 & 05:56:00 \\ \hline
+ & 06:36:00 & 07:26:00 & 07:48:00 & 09:13:00 & 12:05:00 \\ \hline
+ & 12:48:00 & 13:21:00 & 14:22:00 & 17:30:00 & 18:00:00 \\ \hline
+ & 19:53:00 & 21:15:00 & 21:49:00 & 21:59:00 & 22:53:00 \\ \hline
+ & 23:27:00 & 23:49:00 & 23:57:00 &  &  \\ \hline
+Estrada 2 & 00:03:00 & 01:18:00 & 04:35:00 & 06:13:00 & 06:59:00 \\ \hline
+ & 08:03:00 & 10:07:00 & 12:24:00 & 13:45:00 & 14:07:00 \\ \hline
+ & 15:23:00 & 18:34:00 & 19:19:00 & 21:44:00 & 22:27:00 \\ \hline
+ & 22:52:00 & 23:19:00 & 23:29:00 & 23:44:00 &  \\ \hline
+\end{tabular}
+
+```{r echo = FALSE}
+estrada1 <- c(0,0,1,1,2,3,3,3,5,5,6,7,7,9,12,12,13,14,17,18,19,21,21,21,22,23,23,23)
+hist(estrada1, xlab= "Tempo em horas", ylab = "Frenquências", las = 1, main ="Histograma Estrada 1")
+
+estrada2 <- c(0,1,4,6,6,8,10,12,13,14,15,18,19,21,22,22,23,23,23)
+hist(estrada2, xlab= "Tempo em horas", ylab = "Frenquências", las = 1, main ="Histograma Estrada 2")
+```
+
+b) intervalos1 e intervalos2 representam as difenças entre os chamados das estradas 1 e 2 respectivamente:
+
+```{r }
+intervalos1 <- c(51,26,11,30,69,11,21,118,12,50,22,85,172,43,33,61,188,30,113,82,34,10,54,34,22,8)
+
+intervalos2 <- c(75,197,98,46,64,124,137,81,22,76,191,45,145,43,25,27,10,15)
+
+summary(intervalos1)
+sd(intervalos1) # Desvio Padrão de intervalos da estrada 1
+
+summary(intervalos2)
+sd(intervalos2) # Desvio Padrão de intervalos da estrada 1
+```
+## BoxPolt's
+```{r echo = FALSE}
+par(mfrow=c(1,2))
+boxplot(intervalos1)
+boxplot(intervalos2)
+
+```
+
+\flushleft Fazendo uma análise dos boxplot's podemos notar que existe uma relação entre o tipo de estrada e o intervalo de tempo, como podemos notar na estrada 2, o intervalos de tempo são distribuidos de uma forma mais uniforme do do na estrada 1.
+
+c) 
+```{r echo = FALSE}
+par(mfrow=c(1,2))
+qqnorm(intervalos1, main = "Q-Q Plot Normal Estrada 1", ylab = 'Quartis da Estrada 1', xlab= 'Quartis Teóricos')
+qqline(intervalos1, distribution = qnorm, lty=2)
+qqnorm(intervalos2, main = "Q-Q Plot Normal Estrada 2", ylab = 'Quartis da Estrada 2', xlab= 'Quartis Teóricos')
+qqline(intervalos2, distribution = qnorm, lty=2)
+
+p <- ppoints(27)   
+q <- quantile(intervalos1,p=p) 
+plot(qexp(p) ,q, main="Q-Q Plot Exponencial Estrada 1", ylab = 'Quartis da Estrada 1', xlab= 'Quartis Teóricos')
+qqline(q, distribution=qexp, lty=2)
+
+p <- ppoints(18)   
+q <- quantile(intervalos2,p=p) 
+plot(qexp(p) ,q, main="Q-Q Plot Exponencial Estrada 2",ylab = 'Quartis da Estrada 2', xlab= 'Quartis Teóricos')
+qqline(q, distribution=qexp, lty=2)
+```
+Com a análise dos gráficos Q-Q Plot, podemos notar que a variável diferença de interlos das estradas 1 e 2 são compatíveis com o modelo exponencial.
+
+\newpage
+# Exercício 4
+
+a) Boxplt's para cada bloco das 3 fases:
+
+```{r echo = FALSE}
+dados <- read.csv("~/Downloads/MAE217_2018-reacao.csv",header=T, dec=",")
+boxplot(dados$Bloco1,dados$Bloco2,dados$Bloco3,dados$Bloco4,dados$Bloco5,dados$Bloco6,dados$Bloco7,dados$Bloco8,dados$Bloco9,dados$Bloco10,dados$Bloco11,dados$Bloco12,dados$Bloco13,dados$Bloco14,dados$Bloco15,dados$Bloco16,dados$Bloco17,dados$Bloco18)
+
+```
+\newpage
+b) Boxplot's para cada sexo:
+
+```{r echo = FALSE}
+par(mfrow=c(1,2))
+boxplot(dados$media_M, xlab = 'Média dos Homens')
+boxplot(dados$media_F, xlab = 'Média das Mulheres')
+
+```
+Como podemos notar, não temos uma diferença significativa com relação ao sexo do indivíduo.
+
+c) Boxplot's para cada mão:
+
+```{r echo = FALSE}
+par(mfrow=c(1,2))
+boxplot(dados$M_d, xlab = 'Média dos Destros')
+boxplot(dados$M_e, xlab = 'Média dos Canhotos')
+
+```
+
+Como só tinhamos uma amostra muito pequena de canhotos não se pode afirmar muita coisa, logo esse experimento favoreceu mais os destros.
+
+
+d)
+
+```{r }
+library(e1071)
+
+kurtosis(dados$Bloco18) # Curtose do Bloco 5 da fase pós-prática
+skewness(dados$Bloco18) # Coeficiente de assimetria amostral do Bloco 5 da fase pós-prática
+
+Q1 <- quantile(dados$Bloco18, c(0.25))
+Q2 <- median(dados$Bloco18)
+Q3 <- quantile(dados$Bloco18, c(0.75))
+
+((Q3-Q2)-(Q2-Q1))/(Q3-Q1) # coeficiente de assimetria de Blowley do Bloco 5 da fase pós-prática
+
+```
+Apenas olhando para os coeficientes de assimetria dos dados, não seria sufuciente para afirmar que o modelo normal é mais compatível com estes dados, pois os coeficentes não mostraram uma assimentria muito forte.
+\newpage
+
+e) 
+
+```{r }
+qqnorm(dados$Bloco18, main = "Q-Q Plot Bloco 5 fase Poś-Pratica", ylab = 'Quartis do Bloco 5', xlab= 'Quartis Teóricos')
+qqline(dados$Bloco18, distribution = qnorm, lty=2)
+```
+
+Analisando o gráfico QQ-Plot e os coeficentes de assimetria, temos que o modelo normal é compatível nesta situação.
