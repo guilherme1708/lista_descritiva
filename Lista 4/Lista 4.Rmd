@@ -1,0 +1,340 @@
+---
+title: "Lista 4"
+author: "Guilherme Navarro - NºUSP: 8943160 E Matheus da Ponte Nicolay  Nº USP: 10297477"
+output: pdf_document
+---
+
+# Exercício 1
+
+Um modelo expresso por: $y_{i}= \beta x_{i} + e_{i}$ com $i = 1,..,n$
+
+Sendo $y_{i}$ a variável resposta, $x_{i}$ a variável independente, $e_{i}$ o erro aleatório e por fim $\beta$ o acréscimo (ou decréscimo) esperado na resposta $y_{i}$ quando $x_{i}$ é acrescido de uma unidade.
+
+Em que $\mathbb{E}(e_{i})=0$ e $Var(e_{i})=\sigma^2$ erros aleatórios e não correlacionados.
+
+\
+a)
+
+
+Vamos considerar que $Q(\beta) = \sum_{i=1}^{n} e_{i}^2= \sum_{i=1}^{n} (y_{i} - \beta x_{i})^2$
+Seja uma função dos erros ao quadrado e queremos minimiza-los, então devemos calcular sua derivada e igualarmos a zero, logo:
+
+$$\frac{dQ(\beta)}{d\beta}=-2 \sum_{i=1}^{n} (y_{i} - \beta x_{i})(x_{i})=0 \Rightarrow \sum_{i=1}^{n} (y_{i}x_{i} - \beta x_{i}^2)=0 \Rightarrow \beta = \frac{\sum_{i=1}^{n} y_{i}x_{i}}{\sum_{i=1}^{n} x_{i}^2}$$
+
+Então o Estimador de mínimos quadrados para $\beta$ é:
+
+$$\widehat{\beta}= \frac{\sum_{i=1}^{n} Y_{i}x_{i}}{\sum_{i=1}^{n} x_{i}^2}$$
+
+Propor um estimador não viciado para $\sigma^2$
+
+Sabendo que:
+
+$SQTot = \sum_{i=1}^n (Y_{i}- \bar{Y})^2$
+
+$SQReg = \sum_{i=1}^n (\widehat{Y_{i}} -\bar{Y})^2$
+
+$SQRes = \sum_{i=1}^n (Y_{i} -\widehat{Y_{i}} )^2$
+
+$$\widehat{\sigma}^2 = S^2=\frac{ Q(\hat{\beta})}{n-1}= \frac{SQRes}{n-1} =\frac{1}{n-1} \sum_{i=1}^{n} \widehat{e_{i}}^2= \frac{1}{n-1} \sum_{i=1}^{n} (Y_{i} - \widehat{\beta} x_{i})^2$$
+
+Onde $Q(\widehat{\beta})$ é a soma dos quadrados dos resíduos. 
+
+Para verificar que $S^2$ é um estimador não viezado para $\sigma^2$ temos que mostrar que $\mathbb{E}(S^2)=\sigma^2$ 
+E como SQRes = SQTot - SQReg, temos que:
+
+$$\mathbb{E}(S^2)=\frac{1}{n-1} \mathbb{E}(SQReg) =\frac{1}{n-1} \mathbb{E}(SQTot -SQRes)= \frac{1}{n-1} \mathbb{E}(\sum_{i=1}^n (Y_{i}- \bar{Y})^2 - \sum_{i=1}^n (\widehat{Y_{i}} -\bar{Y})^2)=$$ $$= \frac{1}{n-1} \mathbb{E}(\sum_{i=1}^n (Y_{i}- \bar{Y})^2 - \sum_{i=1}^n ((\widehat{\beta }x_{i})^2 -2\widehat{\beta}{Y_{i}}x_{i}+\bar{Y}^2) = \frac{1}{n-1} \mathbb{E}(\sum_{i=1}^n (Y_{i}- \bar{Y})^2 - 2\widehat{\beta} \sum_{i=1}^n x_{i}{Y_{i}}+\widehat{\beta}^2\sum_{i=1}^n (x_{i})^2)=$$ $$= \frac{1}{n-1} \mathbb{E}(\sum_{i=1}^n (Y_{i}- \bar{Y})^2 - 2\widehat{\beta} \sum_{i=1}^n x_{i}{Y_{i}}+\widehat{\beta}^2\frac{\sum_{i=1}^{n} Y_{i}x_{i}}{\widehat{\beta}})=\frac{1}{n-1} \mathbb{E}(\sum_{i=1}^n (Y_{i}- \bar{Y})^2 - 2\widehat{\beta} \sum_{i=1}^n x_{i}{Y_{i}}+\widehat{\beta}\sum_{i=1}^{n} Y_{i}x_{i})=$$ $$=\frac{1}{n-1} \mathbb{E}(\sum_{i=1}^n (Y_{i}- \bar{Y})^2)- \mathbb{E}(\widehat{\beta}\sum_{i=1}^n x_{i}{Y_{i}}) = \frac{1}{n-1} (\mathbb{E}(Y_{i})-n\mathbb{E}(\bar{Y}^2)- \mathbb{E}(\frac{\sum_{i=1}^{n} Y_{i}x_{i}}{\sum_{i=1}^{n} x_{i}^2} \sum_{i=1}^n x_{i}{Y_{i}}))=$$ $$=\frac{1}{n-1} (\mathbb{E}(Y_{i})-n\mathbb{E}(\bar{Y}^2)- \frac{1}{\sum_{i=1}^{n} x_{i}^2} \mathbb{E}(\sum_{i=1}^n (x_{i}Y_{i})^2))= \frac{1}{n-1} (\sum_{i=1}^n [Var(Y_ {i})+\mathbb{E}^2(Y_{i})]-n[Var(\bar{Y})+\mathbb{E}^2(\bar{Y})]$$ $$-\frac{1}{\sum_{i=1}^{n} x_{i}^2} [Var(\sum_{i=1}^n x_{i}Y_{i})+\mathbb{E}^2(\sum_{i=1}^n x_{i}Y_{i}))=\frac{1}{n-1} (\sum_{i=1}^n \sigma^2+(\beta x_{i})^2)-n(\frac{\sigma^2}{n}+(\beta x_{i})^2)-\frac{1}{\sum_{i=1}^{n} x_{i}^2}[\sum_{i=1}^{n} \beta x_{i}]^2=$$ $$=\frac{1}{n-1} (n \sigma^2+\sum_{i=1}^n(\beta x_{i})^2-\sigma^2- (\sum_{i=1}^n \beta x_{i})^2)=\frac{1}{n-1}\sigma^2(n-1)=\sigma^2$$
+Portanto $S^2$ é um estimador não viezado para $\sigma^2$
+
+b)\newline Para o estimador $\widehat{\beta}$ temos: $$\mathbb{E}(\widehat{\beta})=\mathbb{E}(\frac{\sum_{i=1}^{n} Y_{i}x_{i}}{\sum_{i=1}^{n} x_{i}^2})= \frac{\sum_{i=1}^{n} x_{i}}{\sum_{i=1}^{n} x_{i}^2}\mathbb{E}(Y_{i}) = \frac{\sum_{i=1}^{n} x_{i}}{\sum_{i=1}^{n} x_{i}^2} \beta x_{i}= \frac{\sum_{i=1}^{n} x_{i}^2}{\sum_{i=1}^{n} x_{i}^2} \beta = \beta$$ 
+
+E para Variância de $\widehat{\beta}$ temos:
+$$Var(\widehat{\beta})=Var(\frac{\sum_{i=1}^{n} Y_{i}x_{i}}{\sum_{i=1}^{n} x_{i}^2})= (\frac{\sum_{i=1}^{n} x_{i}}{\sum_{i=1}^{n} x_{i}^2})^2Var(Y_{i})= \frac{\sum_{i=1}^{n} x_{i}^2}{\sum_{i=1}^{n} x_{i}^4} \sigma^2 = \frac{\sigma^2}{\sum_{i=1}^{n} x_{i}^2} $$
+Assim, como temos que os erros tem $\mathbb{E}(e_{i})=0$ e $Var(e_{i})= \sigma^2$ tem assintóticamente (TLC) distribuição aproximadamente normal, logo $e_ {i} \sim N(0; \sigma^2)$ o que implica $Y_{i} \sim N(\beta x; \sigma^2)$, isso mostra que $\beta$ é uma combinaçãode v.a. com distribuição aproximandamente normal, portanto: $$\widehat{\beta} \sim N(\beta; \frac{\sigma^2}{\sum_{i=1}^{n} x_{i}^2})$$
+
+c)\newline Tomando do item anterior que $\widehat{\beta}$ tem distribuição aproximadamente Normal especificar um IC com $\gamma \in (0,1)$, utilizando o estimador não viciado para $Var(\widehat{\beta}) = \widehat{\sigma}^2$ calculado no item a), portanto pelo fato de usar uma estimador para $\sigma^2$ a distribuição passará a ser t-Student com (n-1) graus de liberdade, e como $\widehat{\beta} \sim N(\beta; \frac{\sigma^2}{\sum_{i=1}^{n} x_{i}^2})$ Padronizando, temos: $$\frac{\widehat{\beta}-\beta}{\sqrt\frac{\sigma^2}{\sum_{i=1}^{n} x_{i}^2}} \sim N(0,1) \Rightarrow \frac{\widehat{\beta}-\beta}{\sqrt\frac{\widehat{\sigma^2}}{\sum_{i=1}^{n} x_{i}^2}} \sim t(n-1) \therefore$$ $$\mathbb{P}(-t_{\frac{\gamma}{2}(n-1)} \le \frac{\widehat{\beta}-\beta}{\sqrt\frac{\widehat{\sigma^2}}{\sum_{i=1}^{n} x_{i}^2}} \le  t_{\frac{\gamma}{2}(n-1)})= 1-\gamma$$ $$\Rightarrow \mathbb{P}(\widehat{\beta}-t_{\frac{\gamma}{2}(n-1)}\sqrt\frac{\widehat{\sigma^2}}{\sum_{i=1}^{n} x_{i}^2} \le \widehat{\beta} - \beta \le t_{\frac{\gamma}{2}(n-1)}\sqrt\frac{\widehat{\sigma^2}}{\sum_{i=1}^{n} x_{i}^2}) = 1 -\gamma$$ $$ \Rightarrow \mathbb{P}(\widehat{\beta} -t_{\frac{\gamma}{2}(n-1)}\sqrt\frac{\widehat{\sigma^2}}{\sum_{i=1}^{n} x_{i}^2} \le \beta \le \widehat{\beta} + t_{\frac{\gamma}{2}(n-1)}\sqrt\frac{\widehat{\sigma^2}}{\sum_{i=1}^{n} x_{i}^2}) = 1 -\gamma$$ $$\Rightarrow IC(\beta;\gamma) = [\widehat{\beta} -t_{\frac{\gamma}{2}(n-1)}\sqrt\frac{\widehat{\sigma^2}}{\sum_{i=1}^{n} x_{i}^2} \le \beta \le \widehat{\beta} + t_{\frac{\gamma}{2}(n-1)}\sqrt\frac{\widehat{\sigma^2}}{\sum_{i=1}^{n} x_{i}^2}]$$ Com $\gamma \in (0,1)$
+
+
+# Exercício 2
+
+\centering
+\begin{tabular}{cc|cc}
+\hline
+\begin{tabular}[c]{@{}c@{}}Volume US\\ (cm³)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Peso Ideal\\ (g)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Volume US\\ (cm³)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Peso Ideal\\ (g)\end{tabular} \\ \hline
+656 & 630 & 737 & 705 \\
+692 & 745 & 921 & 955 \\
+588 & 690 & 923 & 990 \\
+799 & 890 & 945 & 725 \\
+766 & 825 & 816 & 840 \\
+800 & 960 & 584 & 640 \\
+693 & 835 & 642 & 740 \\
+602 & 570 & 970 & 945 \\ \hline
+\end{tabular}
+\flushleft
+```{r echo=F}
+vol_us <- c(656,692,588,799,766,800,693,602,737,921,923,945,816,584,642,970)
+peso <- c(630,745,690,890,825,960,835,570,705,955,990,725,840,640,740,945)
+
+vol_m <- mean(vol_us)
+vol_us_m <- (vol_us - vol_m)
+dados <- data.frame(vol_us_m, peso)
+
+modelo.regressao <- lm(peso ~ vol_us_m, data = dados)
+
+```
+a)\newline Um modelo de regressão linear simples tem a seguinte equação: $$Y = 0.7642X + 213.28$$ Onde 0.7642 representa o acréscimo esperado no peso real (g) quando o volume previsto em cm³ é incrementado em uma unidade, já o valor 213.28 é o valor esperado de um figado com volume 0 cm³, que por sinal não faz sentido, logo fazendo uma correção no modelo de forma que $Peso_{i} = \alpha + \beta(vol_{i}-758.375)$ onde `r vol_m` é a média dos volumes, assim o modelo ajustado terá a seguinte equação:$$Y =792.81 + 0.7642X$$ Analogamente ao exercício anterior 0.7642 tem a mesma interpretação, porém o peso de 792.81 gramas é o valor esperado de um figado com volume `r vol_m` cm³. \newline
+
+b)
+
+\centering
+```{r echo=FALSE,out.width = '70%'}
+
+plot(peso ~ vol_us_m, las=1, xlab = 'Volume US (cm³)', ylab = 'Peso real(g)', main='Diagrama de dispersão')
+abline(modelo.regressao,col="blue")
+```
+\flushleft
+Pode-se perceber que o gráfico de dispersão acima, que quanto maior o valor do volume do fígado em cm³ encontrado no Ultrasom maior é o valor do peso real em gramas.\newline
+
+```{r echo=FALSE}
+
+vol_us_ajus <- c(-102.375,-66.375,-170.375,40.625,7.625,41.625,-65.375,-156.375,-21.375,162.625,164.625,57.625,-174.375,-116.375,211.625)
+peso_ajus <- c(630,745,690,890,825,960,835,570,705,955,990,840,640,740,945)
+
+y_reg <- (vol_us_ajus*0.9547 + 809.2119)
+dados1 <- data.frame(vol_us_ajus, peso_ajus)
+y_bar <-mean(peso_ajus)
+SQT <- sum((peso_ajus - y_bar)^2)
+SQR <- sum((y_reg -y_bar)^2)
+SQRe <- (SQT - SQR)
+cor <-cor(vol_us_ajus,peso_ajus)
+modelo.regressao.ajus <- lm(peso_ajus ~ vol_us_ajus, data = dados1)
+
+```
+c)
+
+\centering
+```{r echo=FALSE,out.width = '70%'}
+
+plot(peso_ajus ~ vol_us_ajus, las=1, xlab = 'Volume US (cm³)', ylab = 'Peso real(g)', main="Diagrama de dispersão ajustado")
+abline(modelo.regressao.ajus,col="blue")
+```
+\flushleft
+
+Ajustado o modelo obtido no item a), temos $Y = 0.9547X+809.22$ onde 0.9547 representa o acréscimo esperado no peso real (g) quando o volume previsto em cm³ é incrementado em uma unidade, porém o peso de 809.22 gramas é o valor esperado de um figado com volume `r vol_m` cm³. \newline
+
+d)\newline Fazendo uma análise da qualidade do modelo através de medidas descritivas e resíduos temos:
+
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{Medidas descritivas dos resíduos} \\ \hline
+Mínimo   & 1º Quartil  & Mediana  & 3º Quartil & Máximo \\ \hline
+-89.914  & -45.24      & -0.841  & 41.94      & 111.05 \\ \hline
+\end{tabular}
+\flushleft
+
+O coeficiente $R^2 =0.791$
+
+Correlção linear de Pearson = `r cor`
+$$SQTot = \sum_{i=n}^{n} (y_{i}-\bar{y})^2 =`r SQT`$$ $$SQReg = \sum_{i=n}^{n} (\widehat{y_{i}}-\bar{y})^2 =`r SQR`$$ $$SQRes = \sum_{i=n}^{n} (y_{i} -\widehat{y_{i}})^2 =`r SQRe`$$
+
+\centering
+```{r echo=F, out.width = '70%'}
+
+plot(fitted(modelo.regressao.ajus),residuals(modelo.regressao.ajus),xlab="Valores Ajustados",ylab="Resíduos", main="Gráfico dos Valores ajustados x Resíduos")
+abline(h=0)
+
+plot(cooks.distance(modelo.regressao.ajus),type="p", xlab="Índice de observação",ylab="Distância de Cook", main="Gráfico do índices das obervações x Distancia de Cook")
+```
+\flushleft
+
+Assim podemos concluir que foi feito um bom ajuste no modelo, pois temos uma correlação e um coeficiente de determinação altos e também uma baixa distância de Cook, com apenas a remoção de um dado muito discrepante.\newline
+
+e)\newline
+a') Um modelo de regressão linear simples sem intercepto tem a seguinte equação: $$Y = 1.038X $$ Onde 1.038 representa o acréscimo esperado no peso real (g) quando o volume previsto em cm³ é incrementado em uma unidade.\newpage
+
+b')\newline
+
+\centering
+```{r echo=F, out.width = '70%'}
+
+modelo.regressao.orig <- lm(peso ~ vol_us - 1, data = dados)
+plot(peso ~ vol_us, las=1, xlab = 'Volume US (cm³)', ylab = 'Peso real(g)', main="Diagrama de dispersão")
+abline(modelo.regressao.orig,col="blue")
+```
+\flushleft
+
+Sem o intercepto, pode-se perceber que o gráfico de dispersão acima, que quanto maior o valor do volume do fígado em cm³ encontrado no Ultrasom maior é o valor do peso real em gramas.\newline
+
+```{r echo=FALSE}
+vol_us_ajus_o <- c(656,692,588,799,766,800,693,602,737,921,923,816,584,642,970)
+peso_ajus_o <- c(630,745,690,890,825,960,835,570,705,955,990,840,640,740,945)
+
+y_reg_o <- (vol_us_ajus_o*1.066)
+dados2 <- data.frame(vol_us_ajus_o, peso_ajus_o)
+y_bar_o <-mean(peso_ajus_o)
+SQT_o <- sum((peso_ajus_o - y_bar_o)^2)
+SQR_o <- sum((y_reg_o -y_bar_o)^2)
+SQRe_o <- (SQT_o - SQR_o)
+cor_o <-cor(vol_us_ajus_o,peso_ajus_o)
+modelo.regressao.ajus.orig <- lm(peso_ajus_o ~ vol_us_ajus_o - 1, data = dados2)
+
+```
+c')
+
+\centering
+```{r echo=FALSE,out.width = '70%'}
+
+plot(peso_ajus_o ~ vol_us_ajus_o, las=1, xlab = 'Volume US (cm³)', ylab = 'Peso real(g)', main="Diagrama de dispersão ajustado")
+abline(modelo.regressao.ajus.orig,col="blue")
+```
+\flushleft
+
+Ajustado o modelo obtido no item a'), temos $Y = 1.066X$ onde 1.066 representa o acréscimo esperado no peso real (g) quando o volume previsto em cm³ é incrementado em uma unidade.\newpage
+
+d')\newline Fazendo uma análise da qualidade do modelo através de medidas descritivas e resíduos temos:
+
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{Medidas descritivas dos resíduos} \\ \hline
+Mínimo   & 1º Quartil  & Mediana  & 3º Quartil & Máximo \\ \hline
+-88.998  & -49.559     & 7.344    & 46.963     & 107.218 \\ \hline
+\end{tabular}
+\flushleft
+
+O coeficiente $R^2 =0.99$
+
+Correlção linear de Pearson = `r cor_o`
+$$SQTot = \sum_{i=n}^{n} (y_{i}-\bar{y})^2 =`r SQT_o`$$ $$SQReg = \sum_{i=n}^{n} (\widehat{y_{i}}-\bar{y})^2 =`r SQR_o`$$ $$SQRes = \sum_{i=n}^{n} (y_{i} -\widehat{y_{i}})^2 =`r SQRe_o`$$
+
+\centering
+```{r echo=F, out.width = '65%'}
+
+plot(fitted(modelo.regressao.ajus.orig),residuals(modelo.regressao.ajus.orig),xlab="Valores Ajustados",ylab="Resíduos", main="Gráfico dos Valores ajustados x Resíduos")
+abline(h=0)
+
+plot(cooks.distance(modelo.regressao.ajus.orig),type="p", xlab="Índice de observação",ylab="Distância de Cook", main="Gráfico do índices das obervações x Distancia de Cook")
+```
+\flushleft
+
+Assim podemos concluir que com o ajuste do modelo e a utilização do mesmo sem intercepto é melhor neste caso, pois temos uma correlação e um coeficiente de determinação altos e também uma baixa distância de Cook, com apenas a remoção de um dado muito discrepante.\newline
+
+# Exercício 3
+
+
+\centering
+\begin{tabular}{ccc}
+\hline
+Imóvel & Área (m²) & Valor (R\$) \\ \hline
+1 & 128,00 & 10.000,00 \\
+2 & 125,00 & 9.000,00 \\
+3 & 200,00 & 17.000,00 \\
+4 & 4.000,00 & 200.000,00 \\
+5 & 258,00 & 25.000,00 \\
+6 & 360,00 & 40.000,00 \\
+7 & 896,00 & 70.000,00 \\
+8 & 400,00 & 25.000,00 \\
+9 & 352,00 & 35.000,00 \\
+10 & 250,00 & 27.000,00 \\
+11 & 135,00 & 11.000,00 \\
+12 & 6.492,00 & 120.000,00 \\
+13 & 1.040,00 & 35.000,00 \\
+14 & 3.000,00 & 300.000,00 \\ \hline
+\end{tabular}
+\flushleft
+
+a)\newline Notamos que os imóvel 4,12,13,14, tinham dados de área e valor inconsitentes, para o modelo linear, portanto removemos das observações, assim o Diagrama de Dispersão ajustado:
+
+\centering
+```{r echo=F,out.width = '70%'}
+area <- c(128,125,200,258,360,896,400,352,250,135)
+valor <- c(10000,9000,17000,25000,40000,70000,25000,35000,27000,11000)
+
+m_a <- mean(area)
+area_m <-(area-m_a)
+
+dados3 <- data.frame(valor, area_m)
+cor_1 <- cor(area_m,valor)
+modelo.regressao.1 <- lm(valor ~ area_m, data = dados3)
+plot(valor ~ area_m, las=1, ylab = 'Valor (R$)', xlab = 'Área (m²)', main="Diagrama de dispersão")
+abline(modelo.regressao.1,col="blue")
+```
+\flushleft
+
+b)\newline Um modelo de regressão linear simples ajustado tem a seguinte equação: $$Y = 77.16X + 26900$$ Fazendo uma avaliação da qualidade do modelo, temos:
+
+$\widehat{\beta}= 77.16$ Com erro padrão = $8.096$
+
+$\widehat{\alpha}= 26900$ Com erro padrão = $1759.241$
+
+O coeficiente $R^2 =0.919$
+
+Correlção linear de Pearson = `r cor_1`
+
+\centering
+```{r echo=F, out.width = '65%'}
+
+plot(fitted(modelo.regressao.1),residuals(modelo.regressao.1),xlab="Valores Ajustados",ylab="Resíduos", main="Gráfico dos Valores ajustados x Resíduos")
+abline(h=0)
+
+plot(cooks.distance(modelo.regressao.1),type="p", xlab="Índice de observação",ylab="Distância de Cook", main="Gráfico do índices das obervações x Distância de Cook")
+
+qqnorm(residuals(modelo.regressao.1), ylab="Resíduos",xlab="Quantis teóricos",main="Gráfico QQ Normal x resíduos")
+qqline(residuals(modelo.regressao.1))
+```
+\flushleft
+
+Logo podemos concluir que com a remoção dos imóveis 4,12,13,14, o modelo teve uma melhora significativa com um coeficiente de determinação de 0.91, e também vemos que a suposição de normalidade para os erros parece ser adequada.\newline
+
+c)\newline Fazendo um ajuste agora um modelo linearizável do tipo $Y=\beta x^\gamma e$ temos:
+
+Aplicando o ln(logaritmo neperiano) dos dois lados: $$ln(Y_{i})=ln(\beta x_{i}^\gamma e) \Rightarrow ln(Y_{i})=ln(\beta)+\gamma  ln(x_{i})+ln(e_{i})$$
+
+Chamando: $ln(Y_{i})=Y_{i}$
+
+$ln(\beta)=\alpha$
+
+$ln(x_{i})=x_{i}$
+
+$ln(e_{i})= e_{i}$
+
+Temos: $Y_{i}=\alpha + \gamma x_{i}+ e_{i}$ assim seus estimadores de mínimos quadrados com seus respectivos erros padões são:
+
+$\widehat{\gamma}= 0.7654$ Com erro padrão = $10.306$
+
+$\widehat{\alpha}= 5.7158$ Com erro padrão = $8.803$
+
+O coeficiente $R^2 =0.865$
+
+\centering
+```{r echo=F, out.width = '65%'}
+area_t <- c(128,125,200,4000,258,360,896,400,352,250,135,1040,3000)
+valor_t <- c(10000,9000,17000,200000,25000,40000,70000,25000,35000,27000,11000,35000,300000)
+ln_area <- log(area_t)
+ln_valor <- log(valor_t)
+
+dados4 <- data.frame(ln_valor,ln_area) 
+modelo.regressao.log <- lm(ln_valor ~ ln_area, data = dados4)
+plot(ln_area,ln_valor, las=1, ylab = 'log do Valor (R$)', xlab = 'log da Área (m²)',main="Diagrama de dispersão com dados transformados")
+abline(modelo.regressao.log,col="blue")
+
+
+plot(fitted(modelo.regressao.log),residuals(modelo.regressao.log),xlab="Valores Ajustados",ylab="Resíduos", main="Gráfico dos Valores ajustados x Resíduos")
+abline(h=0)
+
+plot(cooks.distance(modelo.regressao.log),type="p", xlab="Índice de observação",ylab="Distância de Cook", main="Gráfico do índices das obervações x Distancia de Cook")
+
+qqnorm(residuals(modelo.regressao.log), ylab="Resíduos",xlab="Quantis teóricos",main="Gráfico QQ Normal x resíduos")
+qqline(residuals(modelo.regressao.log))
+```
+\flushleft
+
+Comparado ao item anterior, para o modelo ficar com um bom ajuste só foi removido uma única obervação, que no caso foi o item 12, mesmo com um coeficiente de determinação um pouco menor do que o modelo do item a), percebemos que este modelo mais se adequa aos dados, pelo fato de facilitar a visualização sem precisar fazer remoções, e também vemos que a suposição de normalidade para os erros parece ser adequada.\newline
+
+d)\newline Vantagens do modelo linear: Interpretação intuitiva; adequado para dados com dependência linear.
+
+Desvantagens do modelo linear: Para obervações com diferentes escalas pode deixar o modelo com difícil ajuste.
+
+Vantagens do modelo linearizavél: Oberservações com escalas muito difrentes ficam próximas; ajuste facilitado.
+
+Desvantagens do modelo linearizável: interpretatar o ln das váriaveis; não é intuitivo.
